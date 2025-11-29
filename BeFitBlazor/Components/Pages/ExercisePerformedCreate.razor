@@ -1,0 +1,113 @@
+@page "/exercises-performed/create"
+@using BeFitBlazor.Data
+@using BeFitBlazor.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext DbContext
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UserManager<ApplicationUser> UserManager
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+<PageTitle>Yeni Egzersiz Kaydı</PageTitle>
+
+<h1>Yeni Egzersiz Kaydı Ekle</h1>
+
+@if (trainingSessions == null || exerciseTypes == null)
+{
+    <p><em>Yükleniyor...</em></p>
+}
+else
+{
+    <EditForm Model="@exercisePerformed" OnValidSubmit="@HandleValidSubmit" FormName="CreateExercisePerformed">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-danger" />
+
+        <div class="mb-3">
+            <label for="trainingSession" class="form-label">Antrenman Seansı:</label>
+            <InputSelect id="trainingSession" @bind-Value="exercisePerformed.TrainingSessionId" class="form-control">
+                <option value="0">-- Seçiniz --</option>
+                @foreach (var session in trainingSessions)
+                {
+                    <option value="@session.Id">@session.StartTime.ToString("dd.MM.yyyy HH:mm") - @session.EndTime.ToString("HH:mm")</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => exercisePerformed.TrainingSessionId)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="exerciseType" class="form-label">Egzersiz Tipi:</label>
+            <InputSelect id="exerciseType" @bind-Value="exercisePerformed.ExerciseTypeId" class="form-control">
+                <option value="0">-- Seçiniz --</option>
+                @foreach (var type in exerciseTypes)
+                {
+                    <option value="@type.Id">@type.Name</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => exercisePerformed.ExerciseTypeId)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="load" class="form-label">Ağırlık (kg):</label>
+            <InputNumber id="load" @bind-Value="exercisePerformed.Load" class="form-control" step="0.5" />
+            <ValidationMessage For="@(() => exercisePerformed.Load)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="sets" class="form-label">Set Sayısı:</label>
+            <InputNumber id="sets" @bind-Value="exercisePerformed.Sets" class="form-control" />
+            <ValidationMessage For="@(() => exercisePerformed.Sets)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="repetitions" class="form-label">Tekrar Sayısı:</label>
+            <InputNumber id="repetitions" @bind-Value="exercisePerformed.Repetitions" class="form-control" />
+            <ValidationMessage For="@(() => exercisePerformed.Repetitions)" />
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+            <a href="/exercises-performed" class="btn btn-secondary">İptal</a>
+        </div>
+    </EditForm>
+}
+
+@code {
+    [SupplyParameterFromForm]
+    private ExercisePerformed exercisePerformed { get; set; } = new();
+
+    private List<TrainingSession>? trainingSessions;
+    private List<ExerciseType>? exerciseTypes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var userId = await GetCurrentUserIdAsync();
+        
+        // Only show user's own training sessions
+        trainingSessions = await DbContext.TrainingSessions
+            .Where(t => t.UserId == userId)
+            .OrderByDescending(t => t.StartTime)
+            .ToListAsync();
+            
+        exerciseTypes = await DbContext.ExerciseTypes
+            .OrderBy(e => e.Name)
+            .ToListAsync();
+    }
+
+    private async Task<string> GetCurrentUserIdAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        return UserManager.GetUserId(user) ?? string.Empty;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        DbContext.ExercisePerformeds.Add(exercisePerformed);
+        await DbContext.SaveChangesAsync();
+        Navigation.NavigateTo("/exercises-performed");
+    }
+}

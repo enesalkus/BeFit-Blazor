@@ -1,0 +1,74 @@
+@page "/training-sessions/create"
+@using BeFitBlazor.Data
+@using BeFitBlazor.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Authorization
+@inject ApplicationDbContext DbContext
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UserManager<ApplicationUser> UserManager
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+<PageTitle>Yeni Antrenman Seansı</PageTitle>
+
+<h1>Yeni Antrenman Seansı Ekle</h1>
+
+<EditForm Model="@trainingSession" OnValidSubmit="@HandleValidSubmit" FormName="CreateTrainingSession">
+    <DataAnnotationsValidator />
+    <ValidationSummary class="text-danger" />
+
+    <div class="mb-3">
+        <label for="startTime" class="form-label">Başlangıç Zamanı:</label>
+        <InputDate Type="InputDateType.DateTimeLocal" id="startTime" @bind-Value="trainingSession.StartTime" class="form-control" />
+        <ValidationMessage For="@(() => trainingSession.StartTime)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="endTime" class="form-label">Bitiş Zamanı:</label>
+        <InputDate Type="InputDateType.DateTimeLocal" id="endTime" @bind-Value="trainingSession.EndTime" class="form-control" />
+        <ValidationMessage For="@(() => trainingSession.EndTime)" />
+    </div>
+
+    @if (!trainingSession.IsValid)
+    {
+        <div class="alert alert-warning">
+            <strong>Uyarı:</strong> Başlangıç zamanı bitiş zamanından sonra olamaz!
+        </div>
+    }
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary" disabled="@(!trainingSession.IsValid)">Kaydet</button>
+        <a href="/training-sessions" class="btn btn-secondary">İptal</a>
+    </div>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    private TrainingSession trainingSession { get; set; } = new() 
+    { 
+        StartTime = DateTime.Now,
+        EndTime = DateTime.Now.AddHours(1)
+    };
+
+    private async Task HandleValidSubmit()
+    {
+        if (trainingSession.IsValid)
+        {
+            // Set the current user's ID
+            trainingSession.UserId = await GetCurrentUserIdAsync();
+            
+            DbContext.TrainingSessions.Add(trainingSession);
+            await DbContext.SaveChangesAsync();
+            Navigation.NavigateTo("/training-sessions");
+        }
+    }
+
+    private async Task<string> GetCurrentUserIdAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        return UserManager.GetUserId(user) ?? string.Empty;
+    }
+}

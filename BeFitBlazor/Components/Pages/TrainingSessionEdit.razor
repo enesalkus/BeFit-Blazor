@@ -1,0 +1,102 @@
+@page "/training-sessions/edit/{id:int}"
+@using BeFitBlazor.Data
+@using BeFitBlazor.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext DbContext
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UserManager<ApplicationUser> UserManager
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+<PageTitle>Antrenman Seansı Düzenle</PageTitle>
+
+<h1>Antrenman Seansı Düzenle</h1>
+
+@if (trainingSession == null)
+{
+    <p><em>Yükleniyor...</em></p>
+}
+else
+{
+    <EditForm Model="@trainingSession" OnValidSubmit="@HandleValidSubmit" FormName="EditTrainingSession">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-danger" />
+
+        <div class="mb-3">
+            <label for="startTime" class="form-label">Başlangıç Zamanı:</label>
+            <InputDate Type="InputDateType.DateTimeLocal" id="startTime" @bind-Value="trainingSession.StartTime" class="form-control" />
+            <ValidationMessage For="@(() => trainingSession.StartTime)" />
+        </div>
+
+        <div class="mb-3">
+            <label for="endTime" class="form-label">Bitiş Zamanı:</label>
+            <InputDate Type="InputDateType.DateTimeLocal" id="endTime" @bind-Value="trainingSession.EndTime" class="form-control" />
+            <ValidationMessage For="@(() => trainingSession.EndTime)" />
+        </div>
+
+        @if (!trainingSession.IsValid)
+        {
+            <div class="alert alert-warning">
+                <strong>Uyarı:</strong> Başlangıç zamanı bitiş zamanından sonra olamaz!
+            </div>
+        }
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary" disabled="@(!trainingSession.IsValid)">Güncelle</button>
+            <a href="/training-sessions" class="btn btn-secondary">İptal</a>
+        </div>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private TrainingSession? trainingSession { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (trainingSession is null)
+        {
+            var userId = await GetCurrentUserIdAsync();
+            trainingSession = await DbContext.TrainingSessions
+                .Where(t => t.Id == Id && t.UserId == userId)
+                .FirstOrDefaultAsync();
+            
+            // If not found or not owned by user, redirect
+            if (trainingSession == null)
+            {
+                Navigation.NavigateTo("/training-sessions");
+            }
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (trainingSession != null && trainingSession.IsValid)
+        {
+            var userId = await GetCurrentUserIdAsync();
+            
+            // Verify ownership before updating
+            if (trainingSession.UserId == userId)
+            {
+                DbContext.TrainingSessions.Update(trainingSession);
+                await DbContext.SaveChangesAsync();
+            }
+            
+            Navigation.NavigateTo("/training-sessions");
+        }
+    }
+
+    private async Task<string> GetCurrentUserIdAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        return UserManager.GetUserId(user) ?? string.Empty;
+    }
+}

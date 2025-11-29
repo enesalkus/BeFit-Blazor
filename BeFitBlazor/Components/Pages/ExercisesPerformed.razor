@@ -1,0 +1,108 @@
+@page "/exercises-performed"
+@using BeFitBlazor.Data
+@using BeFitBlazor.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext DbContext
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UserManager<ApplicationUser> UserManager
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+<PageTitle>Yapılan Egzersizler</PageTitle>
+
+<h1>Yapılan Egzersizler</h1>
+
+<p>
+    <a href="/exercises-performed/create" class="btn btn-primary">Yeni Egzersiz Ekle</a>
+</p>
+
+@if (exercisesPerformed == null)
+{
+    <p><em>Yükleniyor...</em></p>
+}
+else if (!exercisesPerformed.Any())
+{
+    <p><em>Henüz egzersiz kaydı eklenmemiş.</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Antrenman Tarihi</th>
+                <th>Egzersiz</th>
+                <th>Ağırlık (kg)</th>
+                <th>Set</th>
+                <th>Tekrar</th>
+                <th>Toplam Tekrar</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in exercisesPerformed)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.TrainingSession.StartTime.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@item.ExerciseType.Name</td>
+                    <td>@item.Load</td>
+                    <td>@item.Sets</td>
+                    <td>@item.Repetitions</td>
+                    <td>@(item.Sets * item.Repetitions)</td>
+                    <td>
+                        <a href="@($"/exercises-performed/edit/{item.Id}")" class="btn btn-sm btn-warning">Düzenle</a>
+                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteExercisePerformed(item.Id)">Sil</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<ExercisePerformed>? exercisesPerformed;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        var userId = await GetCurrentUserIdAsync();
+        exercisesPerformed = await DbContext.ExercisePerformeds
+            .Include(e => e.TrainingSession)
+            .Include(e => e.ExerciseType)
+            .Where(e => e.TrainingSession.UserId == userId)
+            .OrderByDescending(e => e.TrainingSession.StartTime)
+            .ToListAsync();
+    }
+
+    private async Task<string> GetCurrentUserIdAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        return UserManager.GetUserId(user) ?? string.Empty;
+    }
+
+    private async Task DeleteExercisePerformed(int id)
+    {
+        var userId = await GetCurrentUserIdAsync();
+        var exercisePerformed = await DbContext.ExercisePerformeds
+            .Include(e => e.TrainingSession)
+            .FirstOrDefaultAsync(e => e.Id == id);
+        
+        // Verify ownership via training session before deleting
+        if (exercisePerformed != null && exercisePerformed.TrainingSession.UserId == userId)
+        {
+            DbContext.ExercisePerformeds.Remove(exercisePerformed);
+            await DbContext.SaveChangesAsync();
+            await LoadData();
+        }
+    }
+}

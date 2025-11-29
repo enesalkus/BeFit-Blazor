@@ -1,0 +1,89 @@
+@page "/exercise-types"
+@using BeFitBlazor.Data
+@using BeFitBlazor.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext DbContext
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@rendermode InteractiveServer
+
+<PageTitle>Egzersiz Tipleri</PageTitle>
+
+<h1>Egzersiz Tipleri</h1>
+
+<p>
+    <AuthorizeView Roles="Admin">
+        <a href="/exercise-types/create" class="btn btn-primary">Yeni Egzersiz Tipi Ekle</a>
+    </AuthorizeView>
+</p>
+
+@if (exerciseTypes == null)
+{
+    <p><em>Yükleniyor...</em></p>
+}
+else if (!exerciseTypes.Any())
+{
+    <p><em>Henüz egzersiz tipi eklenmemiş.</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Egzersiz Adı</th>
+                <AuthorizeView Roles="Admin">
+                    <th>İşlemler</th>
+                </AuthorizeView>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in exerciseTypes)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <AuthorizeView Roles="Admin">
+                        <td>
+                            <a href="@($"/exercise-types/edit/{item.Id}")" class="btn btn-sm btn-warning">Düzenle</a>
+                            <button class="btn btn-sm btn-danger" @onclick="() => DeleteExerciseType(item.Id)">Sil</button>
+                        </td>
+                    </AuthorizeView>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<ExerciseType>? exerciseTypes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        exerciseTypes = await DbContext.ExerciseTypes.ToListAsync();
+    }
+
+    private async Task DeleteExerciseType(int id)
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.IsInRole("Admin"))
+        {
+            var exerciseType = await DbContext.ExerciseTypes.FindAsync(id);
+            if (exerciseType != null)
+            {
+                DbContext.ExerciseTypes.Remove(exerciseType);
+                await DbContext.SaveChangesAsync();
+                await LoadData();
+            }
+        }
+    }
+}

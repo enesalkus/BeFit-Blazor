@@ -1,0 +1,40 @@
+@page "/exercise-types/create"
+@using BeFitBlazor.Data
+@using BeFitBlazor.Models
+@using Microsoft.AspNetCore.Authorization
+@inject ApplicationDbContext DbContext
+@inject NavigationManager Navigation
+@attribute [Authorize(Roles = "Admin")]
+@rendermode InteractiveServer
+
+<PageTitle>Yeni Egzersiz Tipi</PageTitle>
+
+<h1>Yeni Egzersiz Tipi Ekle</h1>
+
+<EditForm Model="@exerciseType" OnValidSubmit="@HandleValidSubmit" FormName="CreateExerciseType">
+    <DataAnnotationsValidator />
+    <ValidationSummary class="text-danger" />
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Egzersiz Adı:</label>
+        <InputText id="name" @bind-Value="exerciseType.Name" class="form-control" />
+        <ValidationMessage For="@(() => exerciseType.Name)" />
+    </div>
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a href="/exercise-types" class="btn btn-secondary">İptal</a>
+    </div>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    private ExerciseType exerciseType { get; set; } = new();
+
+    private async Task HandleValidSubmit()
+    {
+        DbContext.ExerciseTypes.Add(exerciseType);
+        await DbContext.SaveChangesAsync();
+        Navigation.NavigateTo("/exercise-types");
+    }
+}

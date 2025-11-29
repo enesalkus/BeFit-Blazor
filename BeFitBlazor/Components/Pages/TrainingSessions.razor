@@ -1,0 +1,98 @@
+@page "/training-sessions"
+@using BeFitBlazor.Data
+@using BeFitBlazor.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext DbContext
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UserManager<ApplicationUser> UserManager
+@attribute [Authorize]
+@rendermode InteractiveServer
+
+<PageTitle>Antrenman Seansları</PageTitle>
+
+<h1>Antrenman Seansları</h1>
+
+<p>
+    <a href="/training-sessions/create" class="btn btn-primary">Yeni Antrenman Seansı Ekle</a>
+</p>
+
+@if (trainingSessions == null)
+{
+    <p><em>Yükleniyor...</em></p>
+}
+else if (!trainingSessions.Any())
+{
+    <p><em>Henüz antrenman seansı eklenmemiş.</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Başlangıç Zamanı</th>
+                <th>Bitiş Zamanı</th>
+                <th>Süre</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in trainingSessions)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.StartTime.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@item.EndTime.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@((item.EndTime - item.StartTime).TotalMinutes.ToString("F0")) dakika</td>
+                    <td>
+                        <a href="@($"/training-sessions/edit/{item.Id}")" class="btn btn-sm btn-warning">Düzenle</a>
+                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteTrainingSession(item.Id)">Sil</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<TrainingSession>? trainingSessions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        var userId = await GetCurrentUserIdAsync();
+        trainingSessions = await DbContext.TrainingSessions
+            .Where(t => t.UserId == userId)
+            .OrderByDescending(t => t.StartTime)
+            .ToListAsync();
+    }
+
+    private async Task<string> GetCurrentUserIdAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        return UserManager.GetUserId(user) ?? string.Empty;
+    }
+
+    private async Task DeleteTrainingSession(int id)
+    {
+        var userId = await GetCurrentUserIdAsync();
+        var trainingSession = await DbContext.TrainingSessions.FindAsync(id);
+        
+        // Verify ownership before deleting
+        if (trainingSession != null && trainingSession.UserId == userId)
+        {
+            DbContext.TrainingSessions.Remove(trainingSession);
+            await DbContext.SaveChangesAsync();
+            await LoadData();
+        }
+    }
+}

@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|c:\\users\\ns\\source\\repos\\befitblazor\\befitblazor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|solutionrelative:befitblazor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|c:\\users\\ns\\source\\repos\\befitblazor\\befitblazor\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|solutionrelative:befitblazor\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|c:\\users\\ns\\source\\repos\\befitblazor\\befitblazor\\models\\exerciseperformed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|solutionrelative:befitblazor\\models\\exerciseperformed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|c:\\users\\ns\\source\\repos\\befitblazor\\befitblazor\\models\\trainingsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|solutionrelative:befitblazor\\models\\trainingsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|c:\\users\\ns\\source\\repos\\befitblazor\\befitblazor\\models\\exercisetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|solutionrelative:befitblazor\\models\\exercisetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|c:\\users\\ns\\source\\repos\\befitblazor\\befitblazor\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E7D1A6FD-DDDD-4FC0-A651-6CF086E3E646}|BeFitBlazor\\BeFitBlazor.csproj|solutionrelative:befitblazor\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ExercisePerformed.cs",
+              "DocumentMoniker": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\Models\\ExercisePerformed.cs",
+              "RelativeDocumentMoniker": "BeFitBlazor\\Models\\ExercisePerformed.cs",
+              "ToolTip": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\Models\\ExercisePerformed.cs",
+              "RelativeToolTip": "BeFitBlazor\\Models\\ExercisePerformed.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T11:33:19.533Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TrainingSession.cs",
+              "DocumentMoniker": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\Models\\TrainingSession.cs",
+              "RelativeDocumentMoniker": "BeFitBlazor\\Models\\TrainingSession.cs",
+              "ToolTip": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\Models\\TrainingSession.cs",
+              "RelativeToolTip": "BeFitBlazor\\Models\\TrainingSession.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T11:33:10.074Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ExerciseType.cs",
+              "DocumentMoniker": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\Models\\ExerciseType.cs",
+              "RelativeDocumentMoniker": "BeFitBlazor\\Models\\ExerciseType.cs",
+              "ToolTip": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\Models\\ExerciseType.cs",
+              "RelativeToolTip": "BeFitBlazor\\Models\\ExerciseType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T11:33:01.601Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "BeFitBlazor\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "BeFitBlazor\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T11:31:50.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\Program.cs",
+              "RelativeDocumentMoniker": "BeFitBlazor\\Program.cs",
+              "ToolTip": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\Program.cs",
+              "RelativeToolTip": "BeFitBlazor\\Program.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAewFEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T11:19:44.598Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\appsettings.json",
+              "RelativeDocumentMoniker": "BeFitBlazor\\appsettings.json",
+              "ToolTip": "C:\\Users\\NS\\source\\repos\\BeFitBlazor\\BeFitBlazor\\appsettings.json",
+              "RelativeToolTip": "BeFitBlazor\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-26T11:18:43.439Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
