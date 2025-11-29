@@ -12,13 +12,13 @@
 @attribute [Authorize]
 @rendermode InteractiveServer
 
-<PageTitle>Egzersiz Kaydı Düzenle</PageTitle>
+<PageTitle>Edit Exercise Log</PageTitle>
 
-<h1>Egzersiz Kaydı Düzenle</h1>
+<h1>Edit Exercise Log</h1>
 
 @if (exercisePerformed == null || trainingSessions == null || exerciseTypes == null)
 {
-    <p><em>Yükleniyor...</em></p>
+    <p><em>Loading...</em></p>
 }
 else
 {
@@ -27,9 +27,9 @@ else
         <ValidationSummary class="text-danger" />
 
         <div class="mb-3">
-            <label for="trainingSession" class="form-label">Antrenman Seansı:</label>
+            <label for="trainingSession" class="form-label">Training Session:</label>
             <InputSelect id="trainingSession" @bind-Value="exercisePerformed.TrainingSessionId" class="form-control">
-                <option value="0">-- Seçiniz --</option>
+                <option value="0">-- Select --</option>
                 @foreach (var session in trainingSessions)
                 {
                     <option value="@session.Id">@session.StartTime.ToString("dd.MM.yyyy HH:mm") - @session.EndTime.ToString("HH:mm")</option>
@@ -39,9 +39,9 @@ else
         </div>
 
         <div class="mb-3">
-            <label for="exerciseType" class="form-label">Egzersiz Tipi:</label>
+            <label for="exerciseType" class="form-label">Exercise Type:</label>
             <InputSelect id="exerciseType" @bind-Value="exercisePerformed.ExerciseTypeId" class="form-control">
-                <option value="0">-- Seçiniz --</option>
+                <option value="0">-- Select --</option>
                 @foreach (var type in exerciseTypes)
                 {
                     <option value="@type.Id">@type.Name</option>
@@ -51,26 +51,26 @@ else
         </div>
 
         <div class="mb-3">
-            <label for="load" class="form-label">Ağırlık (kg):</label>
+            <label for="load" class="form-label">Load (kg):</label>
             <InputNumber id="load" @bind-Value="exercisePerformed.Load" class="form-control" step="0.5" />
             <ValidationMessage For="@(() => exercisePerformed.Load)" />
         </div>
 
         <div class="mb-3">
-            <label for="sets" class="form-label">Set Sayısı:</label>
+            <label for="sets" class="form-label">Sets:</label>
             <InputNumber id="sets" @bind-Value="exercisePerformed.Sets" class="form-control" />
             <ValidationMessage For="@(() => exercisePerformed.Sets)" />
         </div>
 
         <div class="mb-3">
-            <label for="repetitions" class="form-label">Tekrar Sayısı:</label>
+            <label for="repetitions" class="form-label">Repetitions:</label>
             <InputNumber id="repetitions" @bind-Value="exercisePerformed.Repetitions" class="form-control" />
             <ValidationMessage For="@(() => exercisePerformed.Repetitions)" />
         </div>
 
         <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Güncelle</button>
-            <a href="/exercises-performed" class="btn btn-secondary">İptal</a>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="/exercises-performed" class="btn btn-secondary">Cancel</a>
         </div>
     </EditForm>
 }

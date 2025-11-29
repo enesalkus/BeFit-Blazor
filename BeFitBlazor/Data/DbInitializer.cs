@@ -14,7 +14,7 @@ namespace BeFitBlazor.Data
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            // Rolleri oluştur
+
             string[] roleNames = { "Admin", "User" };
             foreach (var roleName in roleNames)
             {
@@ -25,7 +25,7 @@ namespace BeFitBlazor.Data
                 }
             }
 
-            // Admin kullanıcısı oluştur
+
             var adminEmail = "admin@befit.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             
@@ -45,7 +45,7 @@ namespace BeFitBlazor.Data
                 }
             }
 
-            // Normal kullanıcı oluştur
+
             var userEmail = "user@befit.com";
             var normalUser = await userManager.FindByEmailAsync(userEmail);
             
@@ -64,10 +64,10 @@ namespace BeFitBlazor.Data
                     await userManager.AddToRoleAsync(normalUser, "User");
                 }
             }
-            // Veri ekleme işlemleri için DbContext'i al
+
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
-            // Egzersiz Tiplerini Ekle (İngilizce)
+
             if (!context.ExerciseTypes.Any())
             {
                 var exerciseTypes = new List<ExerciseType>
@@ -88,13 +88,13 @@ namespace BeFitBlazor.Data
             }
 
 
-            // user@befit.com için örnek antrenman verileri ekle (5 adet)
+
             if (normalUser != null)
             {
                 await SeedUserTrainingData(context, normalUser, 5);
             }
 
-            // admin@befit.com için örnek antrenman verileri ekle (7 adet)
+
             if (adminUser != null)
             {
                 await SeedUserTrainingData(context, adminUser, 7);
@@ -103,7 +103,7 @@ namespace BeFitBlazor.Data
 
         private static async Task SeedUserTrainingData(ApplicationDbContext context, ApplicationUser user, int count)
         {
-            // Kullanıcının hiç antrenmanı yoksa ekle
+
             if (!context.TrainingSessions.Any(t => t.UserId == user.Id))
             {
                 var exerciseTypes = await context.ExerciseTypes.ToListAsync();
@@ -114,7 +114,7 @@ namespace BeFitBlazor.Data
 
                 for (int i = 0; i < count; i++)
                 {
-                    // Her antrenman arasına 2-3 gün koy
+
                     startDate = startDate.AddDays(random.Next(2, 4));
                     if (startDate > DateTime.Now) break;
 

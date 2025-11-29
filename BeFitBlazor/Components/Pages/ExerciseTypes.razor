@@ -9,23 +9,23 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @rendermode InteractiveServer
 
-<PageTitle>Egzersiz Tipleri</PageTitle>
+<PageTitle>Exercise Types</PageTitle>
 
-<h1>Egzersiz Tipleri</h1>
+<h1>Exercise Types</h1>
 
 <p>
     <AuthorizeView Roles="Admin">
-        <a href="/exercise-types/create" class="btn btn-primary">Yeni Egzersiz Tipi Ekle</a>
+        <a href="/exercise-types/create" class="btn btn-primary">Add New Exercise Type</a>
     </AuthorizeView>
 </p>
 
 @if (exerciseTypes == null)
 {
-    <p><em>Yükleniyor...</em></p>
+    <p><em>Loading...</em></p>
 }
 else if (!exerciseTypes.Any())
 {
-    <p><em>Henüz egzersiz tipi eklenmemiş.</em></p>
+    <p><em>No exercise types added yet.</em></p>
 }
 else
 {
@@ -33,9 +33,9 @@ else
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Egzersiz Adı</th>
+                <th>Exercise Name</th>
                 <AuthorizeView Roles="Admin">
-                    <th>İşlemler</th>
+                    <th>Actions</th>
                 </AuthorizeView>
             </tr>
         </thead>
@@ -47,8 +47,8 @@ else
                     <td>@item.Name</td>
                     <AuthorizeView Roles="Admin">
                         <td>
-                            <a href="@($"/exercise-types/edit/{item.Id}")" class="btn btn-sm btn-warning">Düzenle</a>
-                            <button class="btn btn-sm btn-danger" @onclick="() => DeleteExerciseType(item.Id)">Sil</button>
+                            <a href="@($"/exercise-types/edit/{item.Id}")" class="btn btn-sm btn-warning">Edit</a>
+                            <button class="btn btn-sm btn-danger" @onclick="() => DeleteExerciseType(item.Id)">Delete</button>
                         </td>
                     </AuthorizeView>
                 </tr>

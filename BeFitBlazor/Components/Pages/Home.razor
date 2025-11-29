@@ -1,29 +1,29 @@
 ﻿@page "/"
 
-<PageTitle>BeFit - Ana Sayfa</PageTitle>
+<PageTitle>BeFit - Home</PageTitle>
 
 <div class="text-center mt-5">
-    <h1 class="display-4">BeFit'e Hoşgeldiniz!</h1>
-    <p class="lead">Kişisel antrenman takip uygulamanız.</p>
+    <h1 class="display-4">Welcome to BeFit!</h1>
+    <p class="lead">Your personal workout tracker.</p>
     
     <AuthorizeView>
         <Authorized>
             <div class="alert alert-success mt-4">
-                <h4>Merhaba, @context.User.Identity?.Name!</h4>
-                <p>Antrenmanlarınızı takip etmeye hemen başlayabilirsiniz.</p>
+                <h4>Hello, @context.User.Identity?.Name!</h4>
+                <p>You can start tracking your workouts right away.</p>
                 <div class="mt-3">
-                    <a href="training-sessions" class="btn btn-primary me-2">Antrenmanlarım</a>
-                    <a href="stats" class="btn btn-outline-primary">İstatistiklerim</a>
+                    <a href="training-sessions" class="btn btn-primary me-2">My Workouts</a>
+                    <a href="stats" class="btn btn-outline-primary">My Stats</a>
                 </div>
             </div>
         </Authorized>
         <NotAuthorized>
             <div class="alert alert-warning mt-4">
-                <h4><i class="bi bi-exclamation-triangle-fill me-2"></i> Dikkat</h4>
-                <p class="mb-0">Tüm sayfalara ve özelliklere erişebilmek için lütfen giriş yapınız.</p>
+                <h4><i class="bi bi-exclamation-triangle-fill me-2"></i> Attention</h4>
+                <p class="mb-0">Please login to access all pages and features.</p>
                 <div class="mt-3">
-                    <a href="Account/Login" class="btn btn-primary me-2">Giriş Yap</a>
-                    <a href="Account/Register" class="btn btn-outline-primary">Kayıt Ol</a>
+                    <a href="Account/Login" class="btn btn-primary me-2">Login</a>
+                    <a href="Account/Register" class="btn btn-outline-primary">Register</a>
                 </div>
             </div>
         </NotAuthorized>

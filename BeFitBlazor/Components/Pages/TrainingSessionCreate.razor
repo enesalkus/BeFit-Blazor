@@ -11,22 +11,22 @@
 @attribute [Authorize]
 @rendermode InteractiveServer
 
-<PageTitle>Yeni Antrenman Seansı</PageTitle>
+<PageTitle>New Training Session</PageTitle>
 
-<h1>Yeni Antrenman Seansı Ekle</h1>
+<h1>Add New Training Session</h1>
 
 <EditForm Model="@trainingSession" OnValidSubmit="@HandleValidSubmit" FormName="CreateTrainingSession">
     <DataAnnotationsValidator />
     <ValidationSummary class="text-danger" />
 
     <div class="mb-3">
-        <label for="startTime" class="form-label">Başlangıç Zamanı:</label>
+        <label for="startTime" class="form-label">Start Time:</label>
         <InputDate Type="InputDateType.DateTimeLocal" id="startTime" @bind-Value="trainingSession.StartTime" class="form-control" />
         <ValidationMessage For="@(() => trainingSession.StartTime)" />
     </div>
 
     <div class="mb-3">
-        <label for="endTime" class="form-label">Bitiş Zamanı:</label>
+        <label for="endTime" class="form-label">End Time:</label>
         <InputDate Type="InputDateType.DateTimeLocal" id="endTime" @bind-Value="trainingSession.EndTime" class="form-control" />
         <ValidationMessage For="@(() => trainingSession.EndTime)" />
     </div>
@@ -34,13 +34,13 @@
     @if (!trainingSession.IsValid)
     {
         <div class="alert alert-warning">
-            <strong>Uyarı:</strong> Başlangıç zamanı bitiş zamanından sonra olamaz!
+            <strong>Warning:</strong> Start time cannot be after end time!
         </div>
     }
 
     <div class="mb-3">
-        <button type="submit" class="btn btn-primary" disabled="@(!trainingSession.IsValid)">Kaydet</button>
-        <a href="/training-sessions" class="btn btn-secondary">İptal</a>
+        <button type="submit" class="btn btn-primary" disabled="@(!trainingSession.IsValid)">Save</button>
+        <a href="/training-sessions" class="btn btn-secondary">Cancel</a>
     </div>
 </EditForm>
 

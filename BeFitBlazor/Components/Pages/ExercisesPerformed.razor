@@ -12,21 +12,21 @@
 @attribute [Authorize]
 @rendermode InteractiveServer
 
-<PageTitle>Yapılan Egzersizler</PageTitle>
+<PageTitle>Exercises Performed</PageTitle>
 
-<h1>Yapılan Egzersizler</h1>
+<h1>Exercises Performed</h1>
 
 <p>
-    <a href="/exercises-performed/create" class="btn btn-primary">Yeni Egzersiz Ekle</a>
+    <a href="/exercises-performed/create" class="btn btn-primary">Add New Exercise</a>
 </p>
 
 @if (exercisesPerformed == null)
 {
-    <p><em>Yükleniyor...</em></p>
+    <p><em>Loading...</em></p>
 }
 else if (!exercisesPerformed.Any())
 {
-    <p><em>Henüz egzersiz kaydı eklenmemiş.</em></p>
+    <p><em>No exercise logs added yet.</em></p>
 }
 else
 {
@@ -34,13 +34,13 @@ else
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Antrenman Tarihi</th>
-                <th>Egzersiz</th>
-                <th>Ağırlık (kg)</th>
-                <th>Set</th>
-                <th>Tekrar</th>
-                <th>Toplam Tekrar</th>
-                <th>İşlemler</th>
+                <th>Date</th>
+                <th>Exercise</th>
+                <th>Load (kg)</th>
+                <th>Sets</th>
+                <th>Reps</th>
+                <th>Total Reps</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -55,8 +55,8 @@ else
                     <td>@item.Repetitions</td>
                     <td>@(item.Sets * item.Repetitions)</td>
                     <td>
-                        <a href="@($"/exercises-performed/edit/{item.Id}")" class="btn btn-sm btn-warning">Düzenle</a>
-                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteExercisePerformed(item.Id)">Sil</button>
+                        <a href="@($"/exercises-performed/edit/{item.Id}")" class="btn btn-sm btn-warning">Edit</a>
+                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteExercisePerformed(item.Id)">Delete</button>
                     </td>
                 </tr>
             }

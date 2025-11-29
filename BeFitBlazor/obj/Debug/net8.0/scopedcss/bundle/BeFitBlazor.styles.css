@@ -1,4 +1,4 @@
-/* _content/BeFitBlazor/Components/Layout/MainLayout.razor.rz.scp.css */
+/* /Components/Layout/MainLayout.razor.rz.scp.css */
 .page[b-0e738l7o1w] {
     position: relative;
     display: flex;
@@ -95,7 +95,7 @@ main[b-0e738l7o1w] {
         right: 0.75rem;
         top: 0.5rem;
     }
-/* _content/BeFitBlazor/Components/Layout/NavMenu.razor.rz.scp.css */
+/* /Components/Layout/NavMenu.razor.rz.scp.css */
 .navbar-toggler[b-uqrnffmxjj] {
     appearance: none;
     cursor: pointer;

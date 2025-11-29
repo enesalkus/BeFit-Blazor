@@ -12,21 +12,21 @@
 @attribute [Authorize]
 @rendermode InteractiveServer
 
-<PageTitle>Antrenman Seansları</PageTitle>
+<PageTitle>Training Sessions</PageTitle>
 
-<h1>Antrenman Seansları</h1>
+<h1>Training Sessions</h1>
 
 <p>
-    <a href="/training-sessions/create" class="btn btn-primary">Yeni Antrenman Seansı Ekle</a>
+    <a href="/training-sessions/create" class="btn btn-primary">Add New Training Session</a>
 </p>
 
 @if (trainingSessions == null)
 {
-    <p><em>Yükleniyor...</em></p>
+    <p><em>Loading...</em></p>
 }
 else if (!trainingSessions.Any())
 {
-    <p><em>Henüz antrenman seansı eklenmemiş.</em></p>
+    <p><em>No training sessions added yet.</em></p>
 }
 else
 {
@@ -34,10 +34,10 @@ else
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Başlangıç Zamanı</th>
-                <th>Bitiş Zamanı</th>
-                <th>Süre</th>
-                <th>İşlemler</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Duration</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -47,10 +47,10 @@ else
                     <td>@item.Id</td>
                     <td>@item.StartTime.ToString("dd.MM.yyyy HH:mm")</td>
                     <td>@item.EndTime.ToString("dd.MM.yyyy HH:mm")</td>
-                    <td>@((item.EndTime - item.StartTime).TotalMinutes.ToString("F0")) dakika</td>
+                    <td>@((item.EndTime - item.StartTime).TotalMinutes.ToString("F0")) minutes</td>
                     <td>
-                        <a href="@($"/training-sessions/edit/{item.Id}")" class="btn btn-sm btn-warning">Düzenle</a>
-                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteTrainingSession(item.Id)">Sil</button>
+                        <a href="@($"/training-sessions/edit/{item.Id}")" class="btn btn-sm btn-warning">Edit</a>
+                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteTrainingSession(item.Id)">Delete</button>
                     </td>
                 </tr>
             }
